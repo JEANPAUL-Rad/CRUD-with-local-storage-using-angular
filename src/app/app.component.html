@@ -1,0 +1,101 @@
+<div class="container-fluid">
+  <div class="row pt-3">
+    <div class="col-12 col-md-6">
+      <h4>Student Portal</h4>
+    </div>
+    <div class="col-12 col-md-6 text-md-end mt-2 mt-md-0">
+      <button class="btn btn-outline-success" (click)="openModel()">Add New</button>
+    </div>
+  </div>
+
+  @if (studentList.length !== 0) {
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      @for (item of studentList; track $index) {
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-header">
+              <div class="d-flex justify-content-between">
+                <span>{{item.name}}</span>
+                <span>{{item.MobileNo}}</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <p>{{item.Email}}</p>
+              <p>{{item.City}}, {{item.State}}, {{item.pincode}}</p>
+              <p>{{item.Address}}</p>
+            </div>
+            <div class="card-footer">
+              <div class="d-flex justify-content-between align-items-center">
+                <small>{{item.Email}}</small>
+                <div>
+                  <button class="btn btn-sm btn-primary me-1" (click)="onEdit(item)">Edit</button>
+                  <button class="btn btn-sm btn-danger" (click)="onDelete(item)">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="row">
+      <div class="col-12 p-4 text-center"> 
+        <p>No Record Found. Create New Record</p>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal" #myModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Student Details</h5>
+        <button type="button" class="btn-close" (click)="closeModel()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="studentObj.name" name="name">
+          </div>
+          <div class="mb-3">
+            <label for="mobileNo" class="form-label">Mobile No</label>
+            <input type="text" class="form-control" id="mobileNo" [(ngModel)]="studentObj.MobileNo" name="mobileNo">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="studentObj.Email" name="email">
+          </div>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="city" class="form-label">City</label>
+              <input type="text" class="form-control" id="city" [(ngModel)]="studentObj.City" name="city">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="state" class="form-label">State</label>
+              <input type="text" class="form-control" id="state" [(ngModel)]="studentObj.State" name="state">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="pincode" class="form-label">Pincode</label>
+              <input type="text" class="form-control" id="pincode" [(ngModel)]="studentObj.pincode" name="pincode">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <textarea class="form-control" id="address" rows="3" [(ngModel)]="studentObj.Address" name="address"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModel()">Close</button>
+        @if (studentObj.id == 0) {
+          <button type="button" class="btn btn-primary" (click)="saveStudent()">Save Student</button>
+        } @else {
+          <button type="button" class="btn btn-success" (click)="updateStud()">Update Student</button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
